@@ -1,0 +1,14 @@
+---
+ # only run the next 2 tasks once!
+
+  - name: Check if PostgreSQL database is initialized.
+    stat:
+      path: /var/lib/pgsql/data/PG_VERSION
+    register: pgdata_dir_version
+  - name: initilize postgres
+    command: postgresql-setup initdb
+    when:  not pgdata_dir_version.stat.exists
+  - name: start postgres
+    service:
+      name: postgresql.service
+      state: started

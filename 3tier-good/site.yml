@@ -1,0 +1,28 @@
+---
+- hosts: apps 
+  name: This is my role-based playbook for 3Tier example
+  become: yes
+  tasks: 
+  - include_role:
+      name: commons
+  - include_role:
+      name: tomcat
+- hosts: frontends   
+  name: This is my role-based playbook for 3Tier example
+  become: yes
+  tasks:
+  - include_role:
+      name: commons
+  - include_role:
+      name: haproxy 
+    tags:
+      - haproxy
+- hosts: appdbs    
+  name: This is my role-based playbook for 3Tier example
+  become: yes
+  tasks:
+  - include_role:
+      name: commons
+  - include_role:
+      name: postgres
+  - include_tasks: pg_initialize.yml

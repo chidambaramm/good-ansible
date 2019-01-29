@@ -1,0 +1,5 @@
+---
+- name: Check if PostgreSQL database is initialized.
+  stat:
+    path: /var/lib/pgsql/data/PG_VERSION 
+  register: pgdata_dir_version

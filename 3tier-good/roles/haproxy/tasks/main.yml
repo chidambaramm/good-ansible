@@ -1,0 +1,25 @@
+---
+# tasks file for haproxy
+# Configure HAproxy
+
+
+  - name: http
+    package:
+      name: httpie
+      state: latest
+  - name: install HAProxy
+    yum:
+      name=haproxy state=latest
+  - name: enable HAProxy
+    service:
+      name: haproxy
+      state: started
+  - name: set fact for hostname
+    set_fact:
+      ansible_hname: "{{ansible_hostname}}"
+    delegate_to: apps
+  - name: configure haproxy
+    template:
+      src: haproxy.cfg.j2
+      dest: /etc/haproxy/haproxy.cfg
+    notify: restart HAproxy

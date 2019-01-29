@@ -1,0 +1,14 @@
+---
+# tasks file for postgres
+# Deploy Postgres database and initialize it
+
+
+  - name: install progress
+    yum:
+      name: postgresql-server
+
+  - name: enable apache at boot
+    service:
+      name: postgresql
+      enabled: yes
+
